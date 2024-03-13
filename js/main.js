@@ -50,7 +50,7 @@ submitBtn.addEventListener('click',async(e) => {
 	form.append(file6Name, file6.files[0]);
 
 	try {
-const response= await fetch('http://localhost:3001/admin/stores', {
+const response= await fetch('https://api.wishpo.com/admin/stores', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvYmllbW1hMjAwQGdtYWlsLmNvbSIsIm5hbWUiOiJ0b2JpIG9sYWRlbGUiLCJpZCI6IjY1ZDY0YzhlNTgzMzI3OTEwZGNhNWVjMyIsInR5cGUiOiJhZG1pbiIsInJvbGUiOlsiY3JlYXRlX3N0b3JlIiwiZGVsZXRlX3N0b3JlIiwiYWRkX2FkbWluIiwiZGVsZXRlX2FkbWluIl0sImlhdCI6MTcwODYzNDI0MH0.aImBS0T1mQ4wCPvfG50RAHHufFKG6-Uu31MwMerRlug'
@@ -64,13 +64,16 @@ if (response.ok) {
 	successfulMessage.styles.display="none"
 
 } else {
-	console.error('Upload failed:', response.data);
-	warningMessage.textContent = response.data.
+	console.error('Upload failed:', response.data.message);
+	warningMessage.textContent = response.data.message
 	setTimeout(warningMessage.styles.display="block",5000)
 	warningMessage.styles.display="none"
 }
 	} catch (error) {
 		console.error('Error:', error);
+		warningMessage.textContent = error.data.message
+	setTimeout(warningMessage.styles.display="block",5000)
+	warningMessage.styles.display="none"
 	}
 
 })

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx parcel index.html",
     "dev": " parcel watch ./js/main.js",
-    "build": " parcel build index.html"
+    "build": " parcel build js/main.js"
   },
   "keywords": [],
   "author": "",

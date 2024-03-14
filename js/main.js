@@ -5,6 +5,8 @@ const storeEmail= document.querySelector('#email');
  const checkboxes = document.querySelectorAll('.categories');
 const warningMessage= document.querySelector("#form-message-warning");
 const successfulMessage= document.querySelector("#form-message-success");
+console.log(warningMessage);
+console.log(successfulMessage);
 const link= document.querySelector('#link');
 const description= document.querySelector('#description');
 const file1Name= document.querySelector('#file1-name');
@@ -37,20 +39,20 @@ submitBtn.addEventListener('click',async(e) => {
 	console.log(file1.files)
 
 	const form = new FormData();
-	form.append('name', storeName);
-	form.append('email', storeEmail);
-	form.append('description', description);
+	form.append('name', storeName.value);
+	form.append('email', storeEmail.value);
+	form.append('description', description.value);
 	form.append('category', selectedOptions);
-	form.append('link', link);
-	form.append(file1Name, file1.files[0]);
-	form.append(file2Name, file2.files[0]);
-	form.append(file3Name, file3.files[0]);
-	form.append(file4Name, file4.files[0]);
-	form.append(file5Name, file5.files[0]);
-	form.append(file6Name, file6.files[0]);
+	form.append('link', link.value);
+	if (file1Name.value)form.append(file1Name.value, file1.files[0]);
+	if (file2Name.value) form.append(file2Name.value, file2.files[0]);
+	if (file3Name.value) form.append(file3Name.value, file3.files[0]);
+	if (file4Name.value) form.append(file4Name.value, file4.files[0]);
+	if (file5Name.value) form.append(file5Name.value, file5.files[0]);
+	if (file6Name.value) form.append(file6Name.value, file6.files[0]);
 
 	try {
-const response= await fetch('https://api.wishpo.com/admin/stores', {
+const response= await fetch('http://localhost:3001/admin/stores', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvYmllbW1hMjAwQGdtYWlsLmNvbSIsIm5hbWUiOiJ0b2JpIG9sYWRlbGUiLCJpZCI6IjY1ZDY0YzhlNTgzMzI3OTEwZGNhNWVjMyIsInR5cGUiOiJhZG1pbiIsInJvbGUiOlsiY3JlYXRlX3N0b3JlIiwiZGVsZXRlX3N0b3JlIiwiYWRkX2FkbWluIiwiZGVsZXRlX2FkbWluIl0sImlhdCI6MTcwODYzNDI0MH0.aImBS0T1mQ4wCPvfG50RAHHufFKG6-Uu31MwMerRlug'
@@ -60,20 +62,22 @@ const response= await fetch('https://api.wishpo.com/admin/stores', {
 if (response.ok) {
 	const data = await response.json();
 	console.log('Upload successful:', data);
-	setTimeout(successfulMessage.styles.display="block",5000)
-	successfulMessage.styles.display="none"
+	successfulMessage.style.display="block"
+	setTimeout(()=>(successfulMessage.style.display="none"),5000)
 
 } else {
-	console.error('Upload failed:', response.data.message);
-	warningMessage.textContent = response.data.message
-	setTimeout(warningMessage.styles.display="block",5000)
-	warningMessage.styles.display="none"
+	const data = await response.json();
+	console.log('Upload failed:', data);
+	console.log(warningMessage)
+	warningMessage.style.display="block"
+	warningMessage.textContent = data.message
+	setTimeout(()=>(warningMessage.style.display="none"),10000)
 }
 	} catch (error) {
-		console.error('Error:', error);
+		console.log(error)
+		warningMessage.style.display="block"
 		warningMessage.textContent = error.data.message
-	setTimeout(warningMessage.styles.display="block",5000)
-	warningMessage.styles.display="none"
+		setTimeout(()=>(warningMessage.style.display="none"),10000)
 	}
 
 })

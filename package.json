@@ -2,12 +2,12 @@
   "name": "contact-form-20",
   "version": "1.0.0",
   "description": "",
-  "main": "js/main.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx parcel index.html",
     "dev": " parcel watch ./js/main.js",
-    "build": " parcel build js/main.js"
+    "build": "parcel build ./js/main.js --out-dir ./dist/js  --public-url ./"
   },
   "keywords": [],
   "author": "",

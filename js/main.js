@@ -39,17 +39,17 @@ submitBtn.addEventListener('click',async(e) => {
 	console.log(file1.files)
 
 	const form = new FormData();
-	form.append('name', storeName.value);
-	form.append('email', storeEmail.value);
-	form.append('description', description.value);
 	form.append('category', selectedOptions);
-	form.append('link', link.value);
-	if (file1Name.value)form.append(file1Name.value, file1.files[0]);
-	if (file2Name.value) form.append(file2Name.value, file2.files[0]);
-	if (file3Name.value) form.append(file3Name.value, file3.files[0]);
-	if (file4Name.value) form.append(file4Name.value, file4.files[0]);
-	if (file5Name.value) form.append(file5Name.value, file5.files[0]);
-	if (file6Name.value) form.append(file6Name.value, file6.files[0]);
+	if(storeName.value!="") form.append('name', storeName.value);
+	if(storeEmail.value!= "") form.append('email', storeEmail.value);
+	if (description.value!= "") form.append('description', description.value);
+	if(store) form.append('link', link.value);
+	if (file1Name.value )form.append(file1Name.value, file1.files[0]);
+	if (file2Name.value ) form.append(file2Name.value, file2.files[0]);
+	if (file3Name.value ) form.append(file3Name.value, file3.files[0]);
+	if (file4Name.value ) form.append(file4Name.value, file4.files[0]);
+	if (file5Name.value ) form.append(file5Name.value, file5.files[0]);
+	if (file6Name.value ) form.append(file6Name.value, file6.files[0]);
 
 	try {
 const response= await fetch('https://api.wishpo.com/admin/stores', {

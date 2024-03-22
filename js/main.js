@@ -43,7 +43,7 @@ submitBtn.addEventListener('click',async(e) => {
 	if(storeName.value!="") form.append('name', storeName.value);
 	if(storeEmail.value!= "") form.append('email', storeEmail.value);
 	if (description.value!= "") form.append('description', description.value);
-	if(store) form.append('link', link.value);
+	if(link.value!= "") form.append('link', link.value);
 	if (file1Name.value )form.append(file1Name.value, file1.files[0]);
 	if (file2Name.value ) form.append(file2Name.value, file2.files[0]);
 	if (file3Name.value ) form.append(file3Name.value, file3.files[0]);

@@ -5,8 +5,6 @@ const storeEmail= document.querySelector('#email');
  const checkboxes = document.querySelectorAll('.categories');
 const warningMessage= document.querySelector("#form-message-warning");
 const successfulMessage= document.querySelector("#form-message-success");
-console.log(warningMessage);
-console.log(successfulMessage);
 const link= document.querySelector('#link');
 const description= document.querySelector('#description');
 const file1Name= document.querySelector('#file1-name');
@@ -44,13 +42,17 @@ submitBtn.addEventListener('click',async(e) => {
 	if(storeEmail.value!= "") form.append('email', storeEmail.value);
 	if (description.value!= "") form.append('description', description.value);
 	if(link.value!= "") form.append('link', link.value);
-	if (file1Name.value )form.append(file1Name.value, file1.files[0]);
-	if (file2Name.value ) form.append(file2Name.value, file2.files[0]);
-	if (file3Name.value ) form.append(file3Name.value, file3.files[0]);
-	if (file4Name.value ) form.append(file4Name.value, file4.files[0]);
-	if (file5Name.value ) form.append(file5Name.value, file5.files[0]);
-	if (file6Name.value ) form.append(file6Name.value, file6.files[0]);
+	const myArr=[]
+	if (file1Name.value  && file1.files[0]) form.append(file1Name.value, file1.files[0]);
+	if (file2Name.value && file2.files[0]) form.append(file2Name.value, file2.files[0]);
+	if (file3Name.value && file3.files[0]) form.append(file3Name.value, file3.files[0]);
+	if (file4Name.value && file4.files[0]) form.append(file4Name.value, file4.files[0]);
+	if (file5Name.value && file5.files[0]) form.append(file5Name.value, file5.files[0]);
+	if (file6Name.value && file6.files[0]) form.append(file6Name.value, file6.files[0]);
 	try {
+		myArr.push(file1.files[0],file2.files[0],file3.files[0],file4.files[0],file5.files[0],file6.files[0])
+	const result = myArr.filter(file=>file!=undefined)
+	if(result.length<3 )throw new Error("Please select at least 3 files" )
 const response= await fetch('https://api.wishpo.com/admin/stores', {
   method: 'POST',
   headers: {
@@ -76,10 +78,10 @@ if (response.ok) {
 	setTimeout(()=>(warningMessage.style.display="none"),10000)
 }
 	} catch (error) {
-		console.log(error)
 		contactForm.reset()
+		console.log(error)
 		warningMessage.style.display="block"
-		warningMessage.textContent = error.data.message
+		warningMessage.textContent = error.data?error.data.message : error.message
 		setTimeout(()=>(warningMessage.style.display="none"),10000)
 	}
 })

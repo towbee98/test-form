@@ -22,13 +22,13 @@ const file3=document.querySelector('#file3');
 const file4=document.querySelector('#file4');
 const file5=document.querySelector('#file5');
 const file6=document.querySelector('#file6');
-
+const contactForm = document.querySelector('#contactForm');
 submitBtn.addEventListener('click',async(e) => {
 	e.preventDefault();
-	console.log(e.target)
-	console.log(storeName)
-	console.log(storeEmail)
-	console.log(checkboxes)
+	// console.log(e.target)
+	// console.log(storeName)
+	// console.log(storeEmail)
+	// console.log(checkboxes)
 	const selectedOptions = [];
 	 checkboxes.forEach((checkbox) => {
         if (checkbox.checked) {
@@ -50,7 +50,6 @@ submitBtn.addEventListener('click',async(e) => {
 	if (file4Name.value ) form.append(file4Name.value, file4.files[0]);
 	if (file5Name.value ) form.append(file5Name.value, file5.files[0]);
 	if (file6Name.value ) form.append(file6Name.value, file6.files[0]);
-
 	try {
 const response= await fetch('https://api.wishpo.com/admin/stores', {
   method: 'POST',
@@ -59,14 +58,17 @@ const response= await fetch('https://api.wishpo.com/admin/stores', {
   },
   body: form
 });
+
 if (response.ok) {
 	const data = await response.json();
+	contactForm.reset()
 	console.log('Upload successful:', data);
 	successfulMessage.style.display="block"
 	setTimeout(()=>(successfulMessage.style.display="none"),5000)
 
 } else {
 	const data = await response.json();
+	contactForm.reset()
 	console.log('Upload failed:', data);
 	console.log(warningMessage)
 	warningMessage.style.display="block"
@@ -75,10 +77,10 @@ if (response.ok) {
 }
 	} catch (error) {
 		console.log(error)
+		contactForm.reset()
 		warningMessage.style.display="block"
 		warningMessage.textContent = error.data.message
 		setTimeout(()=>(warningMessage.style.display="none"),10000)
 	}
-
 })
 

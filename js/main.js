@@ -59,7 +59,7 @@ submitBtn.addEventListener("click", async (e) => {
 		);
 		const result = myArr.filter((file) => file != undefined);
 		if (result.length < 3) throw new Error("Please select at least 3 files");
-		const response = await fetch("http://localhost:3001/admin/stores", {
+		const response = await fetch("https://api.wishpo.com/admin/stores", {
 			method: "POST",
 			headers: {
 				"Content-Encoding": "applicatopn/json",
